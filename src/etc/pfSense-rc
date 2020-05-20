@@ -244,7 +244,7 @@ if ! ramdisk_is_active; then
 fi
 
 echo
-cat /usr/local/share/pfSense/ascii-art/pfsense-logo-small.txt
+cat /usr/local/share/TenSense/ascii-art/pfsense-logo-small.txt
 echo
 echo
 echo "Welcome to ${product} ${version}${version_patch}..."

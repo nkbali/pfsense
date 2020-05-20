@@ -30,7 +30,7 @@
 	<disableheader>true</disableheader>
 	<description>
 		<![CDATA[
-		<p><h4>Welcome to pfSense® software!</h4></p>
+		<p><h4>Welcome to TenSense® software!</h4></p>
 		<p>This wizard will provide guidance through the initial configuration of pfSense.</p>
 		<p>The wizard may be stopped at any time by clicking the logo image at the top of the screen.</p>
 		<p><strong>pfSense® software is developed and maintained by Netgate®<strong></p>
