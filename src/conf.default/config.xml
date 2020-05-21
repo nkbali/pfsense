@@ -122,6 +122,22 @@
 	</nat>
 	<filter>
 		<rule>
+			<tracker>1590060871</tracker>
+			<type>block</type>
+			<interface>wan</interface>
+			<ipprotocol>inet</ipprotocol>
+			<statetype><![CDATA[keep state]]></statetype>
+			<protocol>icmp</protocol>
+			<icmptype>any</icmptype>
+			<source>
+				<any></any>
+			</source>
+			<destination>
+				<any></any>
+			</destination>
+			<descr><![CDATA[Block ICMP]]></descr>
+		</rule>
+		<rule>
 			<type>pass</type>
 			<ipprotocol>inet</ipprotocol>
 			<descr><![CDATA[Default allow LAN to any rule]]></descr>
