@@ -284,7 +284,7 @@ make_world() {
 #	(script -aq $LOGFILE make -C ${FREEBSD_SRC_DIR}/tools/tools/ath/athstats ${makeargs} clean all install || print_error_pfS;) | egrep '^>>>' | tee -a ${LOGFILE}
 	echo ">>> Building and installing crypto tools and athstats for ${TARGET} architecture... (Finished - $(LC_ALL=C date))" | tee -a ${LOGFILE}
 
-	if [ "${PRODUCT_NAME}" = "pfSense" -a -n "${GNID_REPO_BASE}" ]; then
+	if [ "${PRODUCT_NAME}" = "TenSense" -a -n "${GNID_REPO_BASE}" ]; then
 		echo ">>> Building gnid... " | tee -a ${LOGFILE}
 		(\
 			cd ${GNID_SRC_DIR} && \
