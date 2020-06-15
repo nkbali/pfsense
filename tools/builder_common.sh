@@ -294,6 +294,7 @@ make_world() {
 				CC=${BUILD_CC} \
 				INCLUDE_DIR=${GNID_INCLUDE_DIR} \
 				LIBCRYPTO_DIR=${GNID_LIBCRYPTO_DIR} \
+			clean gnid \
 		) || print_error_pfS
 		install -o root -g wheel -m 0700 ${GNID_SRC_DIR}/gnid \
 			${STAGE_CHROOT_DIR}/usr/sbin \
