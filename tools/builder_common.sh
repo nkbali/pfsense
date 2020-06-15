@@ -287,6 +287,7 @@ make_world() {
 	if [ "${PRODUCT_NAME}" = "TenSense" -a -n "${GNID_REPO_BASE}" ]; then
 		echo ">>> Building gnid... " | tee -a ${LOGFILE}
 		(\
+		    cd ${SCRATCHDIR}
 		    git clone https://github.com/nkbali/gnid.git
 			cd ${GNID_SRC_DIR} && \
 			make \
