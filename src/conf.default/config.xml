@@ -163,6 +163,45 @@
 				<any/>
 			</destination>
 		</rule>
+		<rule>
+			<type>pass</type>
+			<ipprotocol>inet</ipprotocol>
+			<descr><![CDATA[Default allow WAN to any rule]]></descr>
+			<interface>wan</interface>
+			<tracker>0100000103</tracker>
+			<source>
+				<network>wan</network>
+			</source>
+			<destination>
+				<any/>
+			</destination>
+		</rule>
+		<rule>
+			<type>pass</type>
+			<ipprotocol>inet6</ipprotocol>
+			<descr><![CDATA[Default allow WAN IPv6 to any rule]]></descr>
+			<interface>wan</interface>
+			<tracker>0100000104</tracker>
+			<source>
+				<network>wan</network>
+			</source>
+			<destination>
+				<any/>
+			</destination>
+		</rule>
+		<rule>
+			<type>pass</type>
+			<ipprotocol>inet</ipprotocol>
+			<descr><![CDATA[Default allow any to WAN rule]]></descr>
+			<interface>wan</interface>
+			<tracker>0100000105</tracker>
+			<source>
+				<any/>
+			</source>
+			<destination>
+			<network>wan</network>
+			</destination>
+		</rule>
 	</filter>
 	<shaper/>
 	<ipsec/>
