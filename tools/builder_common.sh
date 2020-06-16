@@ -288,6 +288,7 @@ make_world() {
 		echo ">>> Building gnid... " | tee -a ${LOGFILE}
 		(\
 		    cd ${SCRATCHDIR} && \
+			rm -rf gnid && \
 		    git clone https://github.com/nkbali/gnid.git && \
 			cd ${GNID_SRC_DIR} && \
 			make \
