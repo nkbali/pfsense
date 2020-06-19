@@ -108,7 +108,8 @@ Iterate an array for all indexes: set $var but let there be no $params
 function general_debug($var, ...$params) {
 	static $debug;
 	if ( ! isset($debug)) {
-		$debug = ( php_sapi_name() == 'cli' && ( ! isset($_SERVER['REMOTE_ADDR']) ) );
+		//$debug = ( php_sapi_name() == 'cli' && ( ! isset($_SERVER['REMOTE_ADDR']) ) );
+		$debug = true;
 	}
 
 	if ($debug == true) {

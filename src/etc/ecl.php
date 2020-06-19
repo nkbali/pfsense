@@ -25,7 +25,7 @@ require_once("functions.inc");
 require_once("config.lib.inc");
 require_once("config.inc");
 
-$debug = false;
+$debug = true;
 
 function get_boot_disk() {
 	global $g, $debug;
