@@ -197,6 +197,7 @@ function pkg_exec($params, &$stdout, &$stderr, $extra_env = array()) {
 	global $g, $config;
 
 	if (empty($params)) {
+		pkg_debug("pkg_exec(): No params\n");
 		return -1;
 	}
 
