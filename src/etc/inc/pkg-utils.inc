@@ -348,6 +348,8 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 		$pkg_filter = $pkgs;
 		$pkgs = $g['pkg_prefix'] . '*';
 	} elseif ($pkgs == 'all') {
+		pkg_debug("pkg_get() All\n");
+		pkg_debug("pkg_get() Global: {$g}\n");
 		$pkgs = $g['pkg_prefix'] . '*';
 	}
 
@@ -399,6 +401,8 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	 * If we want more than just the currently installed packages or
 	 * we want up-to-date remote repo info then do a full pkg search
 	 */
+	 pkg_debug("pkg_get() Repo Param: {$repo_param}\n");
+	 pkg_debug("pkg_get() Extra Param: {$extra_param}\n");
 	if (!$installed_pkgs_only || !$remote_repo_usage_disabled) {
 		$did_search = true;
 		$search_rc = pkg_exec("search {$repo_param} " .
