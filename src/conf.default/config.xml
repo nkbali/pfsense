@@ -123,7 +123,7 @@
 	<filter>
 		<rule>
 			<tracker>1590060871</tracker>
-			<type>block</type>
+			<type>allow</type>
 			<interface>wan</interface>
 			<ipprotocol>inet</ipprotocol>
 			<statetype><![CDATA[keep state]]></statetype>
