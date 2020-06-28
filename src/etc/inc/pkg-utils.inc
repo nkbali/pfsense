@@ -349,12 +349,12 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	$file = '/tmp/pkg_info.log';
 	if (is_array($pkgs)) {
 		$pkg_filter = $pkgs;
-		$pkgs = $g['pkg_prefix'] . '*';
+		$pkgs = $g['pkg_prefix'];
 	} elseif ($pkgs == 'all') {
 		file_put_contents($file, "pkg_get() All\n", FILE_APPEND);
 		$global_config = json_encode($g);
 		file_put_contents($file, "pkg_get() Global: {$global_config}\n", FILE_APPEND);
-		$pkgs = $g['pkg_prefix'] . '*';
+		$pkgs = $g['pkg_prefix'];
 	}
 
 	$base_packages = (substr($pkgs, 0, strlen($g['pkg_prefix'])) !=
@@ -408,8 +408,6 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	 * If we want more than just the currently installed packages or
 	 * we want up-to-date remote repo info then do a full pkg search
 	 */
-	 pkg_debug("pkg_get() Repo Param: {$repo_param}\n");
-	 pkg_debug("pkg_get() Extra Param: {$extra_param}\n");
 	if (!$installed_pkgs_only || !$remote_repo_usage_disabled) {
 		file_put_contents($file, "Search All\n", FILE_APPEND);
 		$did_search = true;
