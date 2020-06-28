@@ -343,13 +343,13 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	$rc = 0;
 
 	unset($pkg_filter);
-
+	$file = '/tmp/pkg_info.log';
 	if (is_array($pkgs)) {
 		$pkg_filter = $pkgs;
 		$pkgs = $g['pkg_prefix'] . '*';
 	} elseif ($pkgs == 'all') {
-		pkg_debug("pkg_get() All\n");
-		pkg_debug("pkg_get() Global: {$g}\n");
+		file_put_contents($file, "pkg_get() All\n", FILE_APPEND);
+		file_put_contents($file, "pkg_get() Global: {$g}\n", FILE_APPEND);
 		$pkgs = $g['pkg_prefix'] . '*';
 	}
 
