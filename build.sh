@@ -383,6 +383,8 @@ for _IMGTOBUILD in $_IMAGESTOBUILD; do
 
 	case "${_IMGTOBUILD}" in
 		iso)
+			export custom_package_list="${custom_package_list} suricata ${PRODUCT_NAME}-pkg-suricata"
+			install_pkg_install_ports
 			if [ -n "${ISO_VARIANTS}" ]; then
 				for _variant in ${ISO_VARIANTS}; do
 					create_iso_image ${_variant}

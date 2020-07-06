@@ -196,10 +196,10 @@ function pkg_call($params, $mute = false, $extra_env = array()) {
 function pkg_exec($params, &$stdout, &$stderr, $extra_env = array()) {
 	global $g, $config;
 
-	$file = "/tmp/pkg_info.log";
+	//$file = "/tmp/pkg_info.log";
 	if (empty($params)) {
 		pkg_debug("pkg_exec(): No params\n");
-		file_put_contents($file, "No Params\n", FILE_APPEND);
+		//file_put_contents($file, "No Params\n", FILE_APPEND);
 		return -1;
 	}
 
@@ -210,7 +210,7 @@ function pkg_exec($params, &$stdout, &$stderr, $extra_env = array()) {
 
 
 	pkg_debug("pkg_exec(): {$params}\n");
-	file_put_contents($file, "Params:: {$params}\n", FILE_APPEND);
+	//file_put_contents($file, "Params:: {$params}\n", FILE_APPEND);
 	$process = proc_open("/usr/local/sbin/pkg-static {$params}",
 	    $descriptorspec, $pipes, '/', pkg_env($extra_env));
 
@@ -346,14 +346,14 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	$rc = 0;
 
 	unset($pkg_filter);
-	$file = '/tmp/pkg_info.log';
+	//$file = '/tmp/pkg_info.log';
 	if (is_array($pkgs)) {
 		$pkg_filter = $pkgs;
 		$pkgs = $g['pkg_prefix'];
 	} elseif ($pkgs == 'all') {
-		file_put_contents($file, "pkg_get() All\n", FILE_APPEND);
+		//file_put_contents($file, "pkg_get() All\n", FILE_APPEND);
 		$global_config = json_encode($g);
-		file_put_contents($file, "pkg_get() Global: {$global_config}\n", FILE_APPEND);
+		//file_put_contents($file, "pkg_get() Global: {$global_config}\n", FILE_APPEND);
 		$pkgs = $g['pkg_prefix'];
 	}
 
@@ -386,7 +386,7 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	}
 
 	if ($remote_repo_usage_disabled) {
-		file_put_contents($file, "Remote repo disabled\n", FILE_APPEND);
+		//file_put_contents($file, "Remote repo disabled\n", FILE_APPEND);
 		$extra_param = "-U ";
 	}
 
@@ -397,10 +397,10 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	$info_items = array();
 
 	if ($base_packages) {
-		file_put_contents($file, "pkg_get() Base Packages::{$base_packages}\n", FILE_APPEND);
+		//file_put_contents($file, "pkg_get() Base Packages::{$base_packages}\n", FILE_APPEND);
 		$repo_param = "";
 	} else {
-		file_put_contents($file, "Search Product Repo\n", FILE_APPEND);
+		//file_put_contents($file, "Search Product Repo\n", FILE_APPEND);
 		$repo_param = "-r {$g['product_name']}";
 	}
 
@@ -409,7 +409,7 @@ function get_pkg_info($pkgs = 'all', $remote_repo_usage_disabled = false,
 	 * we want up-to-date remote repo info then do a full pkg search
 	 */
 	if (!$installed_pkgs_only || !$remote_repo_usage_disabled) {
-		file_put_contents($file, "Search All\n", FILE_APPEND);
+		//file_put_contents($file, "Search All\n", FILE_APPEND);
 		$did_search = true;
 		$search_rc = pkg_exec("search {$repo_param} " .
 		    "{$extra_param}-R --raw-format json-compact " .

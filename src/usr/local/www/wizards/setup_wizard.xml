@@ -26,14 +26,14 @@
 <totalsteps>10</totalsteps>
 <step>
 	<id>1</id>
-	<title>pfSense Setup</title>
+	<title>TenSense Setup</title>
 	<disableheader>true</disableheader>
 	<description>
 		<![CDATA[
 		<p><h4>Welcome to TenSense® software!</h4></p>
-		<p>This wizard will provide guidance through the initial configuration of pfSense.</p>
+		<p>This wizard will provide guidance through the initial configuration of TenSense.</p>
 		<p>The wizard may be stopped at any time by clicking the logo image at the top of the screen.</p>
-		<p><strong>pfSense® software is developed and maintained by Netgate®<strong></p>
+		<p><strong>TenSense® software is developed and maintained by 10dot Cloud Security®<strong></p>
 		<br />
 		<p><a href="https://www.netgate.com/pfw1" class="btn btn-info" target="_blank">Learn more</a></p>
 		]]>
@@ -51,12 +51,12 @@
 </step>
 <step>
 	<id>2</id>
-	<title>Netgate® Global Support is available 24/7</title>
+	<title>10dot Cloud Security® Global Support is available 24/7</title>
 	<disableheader>true</disableheader>
 	<description>
 	<![CDATA[
 		<p>Our 24/7 worldwide team of support engineers are the most qualified to diagnose your issue and resolve it quickly, from branch office to enterprise — on premises to cloud.</p>
-		<p>We offer several support subscription plans tailored to fit different environment sizes and requirements. Many companies around the world choose Netgate support because:</p>
+		<p>We offer several support subscription plans tailored to fit different environment sizes and requirements. Many companies around the world choose 10dot Cloud Security support because:</p>
 		<p>
 		<ul>
 			<li>Support is available 24 hours a day, seven days a week, including holidays.</li>
@@ -580,7 +580,7 @@
 			} else {
 				$_POST['ipaddress'] = $_POST['selectedtype'];
 				$config['interfaces']['wan']['ipaddr'] = $_POST['selectedtype'];
-				write_config(gettext("WAN interface configuration saved via pfSense setup wizard."));
+				write_config(gettext("WAN interface configuration saved via TenSense setup wizard."));
 			}
 			if (!$config['interfaces']['lan']) {
 				header("Location: /wizard.php?xml=setup_wizard.xml&stepid=6&next=Next");
@@ -724,7 +724,7 @@
 			$admin_user =& getUserEntryByUID(0);
 			local_user_set_password($admin_user, $_POST['adminpassword']);
 			local_user_set($admin_user);
-			write_config(gettext("Admin WebGUI password saved via pfSense setup wizard."));
+			write_config(gettext("Admin WebGUI password saved via TenSense setup wizard."));
 		} else {
 			print_info_box("Passwords do not match! Please press back in the browser window and correct.");
 			die;
@@ -788,7 +788,7 @@
 		unset($config['wizardtemp']);
 		/* See https://redmine.pfsense.org/issues/8524 */
 		$config['system']['webgui']['althostnames'] = $althosts_before;
-		write_config(gettext("Configuration saved on completion of the pfSense setup wizard."));
+		write_config(gettext("Configuration saved on completion of the TenSense setup wizard."));
 		reload_all();
 		mwexec_bg("/etc/rc.update_bogons.sh now");
 		touch("{$g['cf_conf_path']}/copynotice_display");
