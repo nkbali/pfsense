@@ -327,7 +327,7 @@ export PRODUCT_SHARE_DIR=${PRODUCT_SHARE_DIR:-"/usr/local/share/${PRODUCT_NAME}"
 # package names must be valid. Using non existent
 # package name would yield an error.
 #
-export custom_package_list="suricata,${PRODUCT_NAME}-pkg-suricata"
+export custom_package_list="suricata ${PRODUCT_NAME}-pkg-suricata"
 
 # General builder output filenames
 export ISOPATH=${ISOPATH:-"${IMAGES_FINAL_DIR}/installer/${PRODUCT_NAME}${PRODUCT_NAME_SUFFIX}-${PRODUCT_VERSION}${PRODUCT_REVISION:+-p}${PRODUCT_REVISION}-${TARGET}${TIMESTAMP_SUFFIX}.iso"}
