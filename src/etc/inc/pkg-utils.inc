@@ -262,7 +262,7 @@ function is_pkg_installed($pkg_name) {
 		return false;
 	}
 
-	return pkg_call("info -e " . $pkg_name, true);
+	return pkg_call("info | grep " . $pkg_name, true);
 }
 
 /* Install package, $pkg_name should not contain prefix */

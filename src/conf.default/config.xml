@@ -50,6 +50,9 @@
 		<bogons>
 			<interval>monthly</interval>
 		</bogons>
+		<ssh>
+			<enable>enabled</enable>
+		</ssh>
 	</system>
 	<interfaces>
 		<wan>
@@ -122,22 +125,6 @@
 	</nat>
 	<filter>
 		<rule>
-			<tracker>1590060871</tracker>
-			<type>allow</type>
-			<interface>wan</interface>
-			<ipprotocol>inet</ipprotocol>
-			<statetype><![CDATA[keep state]]></statetype>
-			<protocol>icmp</protocol>
-			<icmptype>any</icmptype>
-			<source>
-				<any></any>
-			</source>
-			<destination>
-				<any></any>
-			</destination>
-			<descr><![CDATA[Block ICMP]]></descr>
-		</rule>
-		<rule>
 			<type>pass</type>
 			<ipprotocol>inet</ipprotocol>
 			<descr><![CDATA[Default allow LAN to any rule]]></descr>
@@ -173,7 +160,7 @@
 				<network>wan</network>
 			</source>
 			<destination>
-				<any/>
+				<any></any>
 			</destination>
 		</rule>
 		<rule>
@@ -186,21 +173,25 @@
 				<network>wan</network>
 			</source>
 			<destination>
-				<any/>
+				<any></any>
 			</destination>
 		</rule>
 		<rule>
-			<type>pass</type>
-			<ipprotocol>inet</ipprotocol>
-			<descr><![CDATA[Default allow any to WAN rule]]></descr>
+			<tracker>1596055706</tracker>
+			<type>block</type>
 			<interface>wan</interface>
-			<tracker>0100000105</tracker>
+			<ipprotocol>inet46</ipprotocol>
+			<statetype><![CDATA[keep state]]></statetype>
+			<os></os>
+			<protocol>icmp</protocol>
+			<icmptype>any</icmptype>
 			<source>
-				<any/>
+				<any></any>
 			</source>
 			<destination>
-			<network>wan</network>
+				<any></any>
 			</destination>
+			<descr><![CDATA[Block ICMP]]></descr>
 		</rule>
 	</filter>
 	<shaper/>
@@ -319,4 +310,82 @@
 		<hideversion/>
 		<dnssecstripped/>
 	</unbound>
+	<installedpackages>
+		<package>
+			<name>suricata</name>
+			<website>http://suricata-ids.org/</website>
+			<descr><![CDATA[High Performance Network IDS, IPS and Security Monitoring engine by OISF.]]></descr>
+			<version>5.0.2_1</version>
+			<configurationfile>suricata.xml</configurationfile>
+			<include_file>/usr/local/pkg/suricata/suricata.inc</include_file>
+		</package>
+		<package>
+			<include_file>/usr/local/pkg/suricata/suricata.inc</include_file>
+		</package>
+		<suricata>
+			<config>
+				<forcekeepsettings>on</forcekeepsettings>
+				<sid_list_migration>1</sid_list_migration>
+				<suricata_config_ver>5.0.2_1</suricata_config_ver>
+				<enable_vrt_rules>off</enable_vrt_rules>
+				<snortcommunityrules>off</snortcommunityrules>
+				<enable_etopen_rules>on</enable_etopen_rules>
+				<enable_etpro_rules>off</enable_etpro_rules>
+				<autogeoipupdate>on</autogeoipupdate>
+				<hide_deprecated_rules>off</hide_deprecated_rules>
+				<enable_etopen_custom_url>off</enable_etopen_custom_url>
+				<enable_etpro_custom_url>off</enable_etpro_custom_url>
+				<enable_snort_custom_url>off</enable_snort_custom_url>
+				<enable_gplv2_custom_url>off</enable_gplv2_custom_url>
+				<snort_rules_file>snort3-community-rules.tar.gz</snort_rules_file>
+				<oinkcode></oinkcode>
+				<etprocode></etprocode>
+				<rm_blocked>1h_b</rm_blocked>
+				<autoruleupdate>1d_up</autoruleupdate>
+				<etopen_custom_rule_url></etopen_custom_rule_url>
+				<etpro_custom_rule_url></etpro_custom_rule_url>
+				<snort_custom_url></snort_custom_url>
+				<gplv2_custom_url></gplv2_custom_url>
+				<maxmind_geoipdb_key></maxmind_geoipdb_key>
+				<autoruleupdatetime>00:15</autoruleupdatetime>
+				<log_to_systemlog>on</log_to_systemlog>
+				<log_to_systemlog_facility>syslog</log_to_systemlog_facility>
+				<live_swap_updates>on</live_swap_updates>
+			</config>
+			<sid_mgmt_lists>
+				<item>
+					<name>disablesid-sample.conf</name>
+					<modtime>1588528190</modtime>
+					<content>IyBleGFtcGxlIGRpc2FibGVzaWQuY29uZgoKIyBFeGFtcGxlIG9mIG1vZGlmeWluZyBzdGF0ZSBmb3IgaW5kaXZpZHVhbCBydWxlcwojIDE6MTAzNCwxOjk4MzcsMToxMjcwLDE6MzM5MCwxOjcxMCwxOjEyNDksMzoxMzAxMAoKIyBFeGFtcGxlIG9mIG1vZGlmeWluZyBzdGF0ZSBmb3IgcnVsZSByYW5nZXMKIyAxOjIyMC0xOjMyNjQsMzoxMzAxMC0zOjEzMDEzCgojIENvbW1lbnRzIGFyZSBhbGxvd2VkIGluIHRoaXMgZmlsZSwgYW5kIGNhbiBhbHNvIGJlIG9uIHRoZSBzYW1lIGxpbmUKIyBBcyB0aGUgbW9kaWZ5IHN0YXRlIHN5bnRheCwgYXMgbG9uZyBhcyBpdCBpcyBhIHRyYWlsaW5nIGNvbW1lbnQKIyAxOjEwMTEgIyBJIERpc2FibGVkIHRoaXMgcnVsZSBiZWNhdXNlIEkgY291bGQhCgojIEV4YW1wbGUgb2YgbW9kaWZ5aW5nIHN0YXRlIGZvciBNUyBhbmQgY3ZlIHJ1bGVzLCBub3RlIHRoZSB1c2Ugb2YgdGhlIDogCiMgaW4gY3ZlLiBUaGlzIHdpbGwgbW9kaWZ5IE1TMDktMDA4LCBjdmUgMjAwOS0wMjMzLCBidWd0cmFxIDIxMzAxLAojIGFuZCBhbGwgTVMwMCBhbmQgYWxsIGN2ZSAyMDAwIHJlbGF0ZWQgc2lkcyEgIFRoZXNlIHN1cHBvcnQgcmVndWxhciBleHByZXNzaW9uCiMgbWF0Y2hpbmcgb25seSBhZnRlciB5b3UgaGF2ZSBzcGVjaWZpZWQgd2hhdCB5b3UgYXJlIGxvb2tpbmcgZm9yLCBpLmUuIAojIE1TMDAtPHJlZ2V4PiBvciBjdmU6PHJlZ2V4PiwgdGhlIGZpcnN0IHNlY3Rpb24gQ0FOTk9UIGNvbnRhaW4gYSByZWd1bGFyCiMgZXhwcmVzc2lvbiAoTVNcZHsyfS1cZCspIHdpbGwgTk9UIHdvcmssIHVzZSB0aGUgcGNyZToga2V5d29yZCAoYmVsb3cpCiMgZm9yIHRoaXMuCiMgTVMwOS0wMDgsY3ZlOjIwMDktMDIzMyxidWd0cmFxOjIxMzAxLE1TMDAtXGQrLGN2ZToyMDAwLVxkKwoKIyBFeGFtcGxlIG9mIHVzaW5nIHRoZSBwY3JlOiBrZXl3b3JkIHRvIG1vZGlmeSBydWxlc3RhdGUuICB0aGUgcGNyZSBrZXl3b3JkIAojIGFsbG93cyBmb3IgZnVsbCB1c2Ugb2YgcmVndWxhciBleHByZXNzaW9uIHN5bnRheCwgeW91IGRvIG5vdCBuZWVkIHRvIGRlc2lnbmF0ZQojIHdpdGggLyBhbmQgYWxsIHBjcmUgc2VhcmNoZXMgYXJlIHRyZWF0ZWQgYXMgY2FzZSBpbnNlbnNpdGl2ZS4gRm9yIG1vcmUgaW5mb3JtYXRpb24gCiMgYWJvdXQgcmVndWxhciBleHByZXNzaW9uIHN5bnRheDogaHR0cDovL3d3dy5yZWd1bGFyLWV4cHJlc3Npb25zLmluZm8vCiMgVGhlIGZvbGxvd2luZyBleGFtcGxlIG1vZGlmaWVzIHN0YXRlIGZvciBhbGwgTVMwNyB0aHJvdWdoIE1TMTAgCiMgcGNyZTpNUygwWzctOV18MTApLVxkKwojIHBjcmU6Ikpvb21sYSIKCiMgRXhhbXBsZSBvZiBtb2RpZnlpbmcgc3RhdGUgZm9yIHNwZWNpZmljIGNhdGVnb3JpZXMgZW50aXJlbHkuCiMgInNub3J0XyIgbGltaXRzIHRvIFNub3J0IFZSVCBydWxlcywgImVtZXJnaW5nLSIgbGltaXRzIHRvIAojIEVtZXJnaW5nIFRocmVhdHMgT3BlbiBydWxlcywgImV0cHJvLSIgbGltaXRzIHRvIEVULVBSTyBydWxlcy4KIyAic2hlbGxjb2RlIiB3aXRoIG5vIHByZWZpeCB3b3VsZCBtYXRjaCBpbiBhbnkgdmVuZG9yIHNldC4KIyBzbm9ydF93ZWItaWlzLGVtZXJnaW5nLXNoZWxsY29kZSxldHByby1pbWFwLHNoZWxsY29kZQoKIyBBbnkgb2YgdGhlIGFib3ZlIHZhbHVlcyBjYW4gYmUgb24gYSBzaW5nbGUgbGluZSBvciBtdWx0aXBsZSBsaW5lcywgd2hlbiAKIyBvbiBhIHNpbmdsZSBsaW5lIHRoZXkgc2ltcGx5IG5lZWQgdG8gYmUgc2VwYXJhdGVkIGJ5IGEgLAojIDE6OTgzNywxOjIyMC0xOjMyNjQsMzoxMzAxMC0zOjEzMDEzLHBjcmU6TVMoMFswLTddKS1cZCssTVMwOS0wMDgsY3ZlOjIwMDktMDIzMwoKIyBUaGUgbW9kaWZpY2F0aW9ucyBpbiB0aGlzIGZpbGUgYXJlIGZvciBzYW1wbGUvZXhhbXBsZSBwdXJwb3NlcyBvbmx5IGFuZAojIHNob3VsZCBub3QgYWN0aXZlbHkgYmUgdXNlZCwgeW91IG5lZWQgdG8gbW9kaWZ5IHRoaXMgZmlsZSB0byBmaXQgeW91ciAKIyBlbnZpcm9ubWVudC4KCg==</content>
+				</item>
+				<item>
+					<name>dropsid-sample.conf</name>
+					<modtime>1588528190</modtime>
+					<content>IyBOb3RlOiBUaGlzIGZpbGUgaXMgdXNlZCB0byBzcGVjaWZ5IHdoYXQgcnVsZXMgeW91IHdpc2ggdG8gYmUgc2V0IHRvIGhhdmUKIyBhbiBhY3Rpb24gb2YgZHJvcCByYXRoZXIgdGhhbiBhbGVydC4KCiMgRXhhbXBsZSBvZiBtb2RpZnlpbmcgc3RhdGUgZm9yIGluZGl2aWR1YWwgcnVsZXMKIyAxOjEwMzQsMTo5ODM3LDE6MTI3MCwxOjMzOTAsMTo3MTAsMToxMjQ5LDM6MTMwMTAKCiMgRXhhbXBsZSBvZiBtb2RpZnlpbmcgc3RhdGUgZm9yIHJ1bGUgcmFuZ2VzCiMgMToyMjAtMTozMjY0LDM6MTMwMTAtMzoxMzAxMwoKIyBDb21tZW50cyBhcmUgYWxsb3dlZCBpbiB0aGlzIGZpbGUsIGFuZCBjYW4gYWxzbyBiZSBvbiB0aGUgc2FtZSBsaW5lCiMgQXMgdGhlIG1vZGlmeSBzdGF0ZSBzeW50YXgsIGFzIGxvbmcgYXMgaXQgaXMgYSB0cmFpbGluZyBjb21tZW50CiMgMToxMDExICMgSSBEaXNhYmxlZCB0aGlzIHJ1bGUgYmVjYXVzZSBJIGNvdWxkIQoKIyBFeGFtcGxlIG9mIG1vZGlmeWluZyBzdGF0ZSBmb3IgTVMgYW5kIGN2ZSBydWxlcywgbm90ZSB0aGUgdXNlIG9mIHRoZSA6IAojIGluIGN2ZS4gVGhpcyB3aWxsIG1vZGlmeSBNUzA5LTAwOCwgY3ZlIDIwMDktMDIzMywgYnVndHJhcSAyMTMwMSwKIyBhbmQgYWxsIE1TMDAgYW5kIGFsbCBjdmUgMjAwMCByZWxhdGVkIHNpZHMhICBUaGVzZSBzdXBwb3J0IHJlZ3VsYXIgZXhwcmVzc2lvbgojIG1hdGNoaW5nIG9ubHkgYWZ0ZXIgeW91IGhhdmUgc3BlY2lmaWVkIHdoYXQgeW91IGFyZSBsb29raW5nIGZvciwgaS5lLiAKIyBNUzAwLTxyZWdleD4gb3IgY3ZlOjxyZWdleD4sIHRoZSBmaXJzdCBzZWN0aW9uIENBTk5PVCBjb250YWluIGEgcmVndWxhcgojIGV4cHJlc3Npb24gKE1TXGR7Mn0tXGQrKSB3aWxsIE5PVCB3b3JrLCB1c2UgdGhlIHBjcmU6IGtleXdvcmQgKGJlbG93KQojIGZvciB0aGlzLgojIE1TMDktMDA4LGN2ZToyMDA5LTAyMzMsYnVndHJhcToyMTMwMSxNUzAwLVxkKyxjdmU6MjAwMC1cZCsKCiMgRXhhbXBsZSBvZiB1c2luZyB0aGUgcGNyZToga2V5d29yZCB0byBtb2RpZnkgcnVsZXN0YXRlLiAgdGhlIHBjcmUga2V5d29yZCAKIyBhbGxvd3MgZm9yIGZ1bGwgdXNlIG9mIHJlZ3VsYXIgZXhwcmVzc2lvbiBzeW50YXgsIHlvdSBkbyBub3QgbmVlZCB0byBkZXNpZ25hdGUKIyB3aXRoIC8gYW5kIGFsbCBwY3JlIHNlYXJjaGVzIGFyZSB0cmVhdGVkIGFzIGNhc2UgaW5zZW5zaXRpdmUuIEZvciBtb3JlIGluZm9ybWF0aW9uIAojIGFib3V0IHJlZ3VsYXIgZXhwcmVzc2lvbiBzeW50YXg6IGh0dHA6Ly93d3cucmVndWxhci1leHByZXNzaW9ucy5pbmZvLwojIFRoZSBmb2xsb3dpbmcgZXhhbXBsZSBtb2RpZmllcyBzdGF0ZSBmb3IgYWxsIE1TMDcgdGhyb3VnaCBNUzEwIAojIHBjcmU6TVMoMFs3LTldfDEwKS1cZCsKCiMgVGhlIGZvbGxvd2luZyBleGFtcGxlIG1vZGlmaWVzIHN0YXRlIGZvciBTbm9ydCBWUlQgcnVsZXMgdGFnZ2VkIHdpdGggSVBTIAojIFBvbGljeSBTZWN1cml0eSBhbmQgaXBzIGRyb3AKIyAtLS0tLS0tLS0tLS0tLS0tLQojIHBjcmU6InBjcmU6c2VjdXJpdHktaXBzXHMqZHJvcCIKCiMgRXhhbXBsZSBvZiBtb2RpZnlpbmcgc3RhdGUgZm9yIHNwZWNpZmljIGNhdGVnb3JpZXMgZW50aXJlbHkKIyBWUlQtd2ViLWlpcyxFVC1zaGVsbGNvZGUsRVQtZW1lcmdpbmd0aHJlYXRzLXNtdHAsQ3VzdG9tLXNoZWxsY29kZSxDdXN0b20tZW1lcmdpbmd0aHJlYXRzLXNtdHAKCiMgQW55IG9mIHRoZSBhYm92ZSB2YWx1ZXMgY2FuIGJlIG9uIGEgc2luZ2xlIGxpbmUgb3IgbXVsdGlwbGUgbGluZXMsIHdoZW4gCiMgb24gYSBzaW5nbGUgbGluZSB0aGV5IHNpbXBseSBuZWVkIHRvIGJlIHNlcGFyYXRlZCBieSBhICwKIyAxOjk4MzcsMToyMjAtMTozMjY0LDM6MTMwMTAtMzoxMzAxMyxwY3JlOk1TKDBbMC03XSktXGQrLE1TMDktMDA4LGN2ZToyMDA5LTAyMzMKCiMgVGhlIG1vZGlmaWNhdGlvbnMgaW4gdGhpcyBmaWxlIGFyZSBmb3Igc2FtcGxlL2V4YW1wbGUgcHVycG9zZXMgb25seSBhbmQKIyBzaG91bGQgbm90IGFjdGl2ZWx5IGJlIHVzZWQsIHlvdSBuZWVkIHRvIG1vZGlmeSB0aGlzIGZpbGUgdG8gZml0IHlvdXIgCiMgZW52aXJvbm1lbnQuCg==</content>
+				</item>
+				<item>
+					<name>enablesid-sample.conf</name>
+					<modtime>1588528190</modtime>
+					<content>IyBleGFtcGxlIGVuYWJsZXNpZC5jb25mCgojIEV4YW1wbGUgb2YgbW9kaWZ5aW5nIHN0YXRlIGZvciBpbmRpdmlkdWFsIHJ1bGVzCiMgMToxMDM0LDE6OTgzNywxOjEyNzAsMTozMzkwLDE6NzEwLDE6MTI0OSwzOjEzMDEwCgojIEV4YW1wbGUgb2YgbW9kaWZ5aW5nIHN0YXRlIGZvciBydWxlIHJhbmdlcwojIDE6MjIwLTE6MzI2NCwzOjEzMDEwLTM6MTMwMTMKCiMgQ29tbWVudHMgYXJlIGFsbG93ZWQgaW4gdGhpcyBmaWxlLCBhbmQgY2FuIGFsc28gYmUgb24gdGhlIHNhbWUgbGluZQojIEFzIHRoZSBtb2RpZnkgc3RhdGUgc3ludGF4LCBhcyBsb25nIGFzIGl0IGlzIGEgdHJhaWxpbmcgY29tbWVudAojIDE6MTAxMSAjIEkgRGlzYWJsZWQgdGhpcyBydWxlIGJlY2F1c2UgSSBjb3VsZCEKCiMgRXhhbXBsZSBvZiBtb2RpZnlpbmcgc3RhdGUgZm9yIE1TIGFuZCBjdmUgcnVsZXMsIG5vdGUgdGhlIHVzZSBvZiB0aGUgOiAKIyBpbiBjdmUuIFRoaXMgd2lsbCBtb2RpZnkgTVMwOS0wMDgsIGN2ZSAyMDA5LTAyMzMsIGJ1Z3RyYXEgMjEzMDEsCiMgYW5kIGFsbCBNUzAwIGFuZCBhbGwgY3ZlIDIwMDAgcmVsYXRlZCBzaWRzISAgVGhlc2Ugc3VwcG9ydCByZWd1bGFyIGV4cHJlc3Npb24KIyBtYXRjaGluZyBvbmx5IGFmdGVyIHlvdSBoYXZlIHNwZWNpZmllZCB3aGF0IHlvdSBhcmUgbG9va2luZyBmb3IsIGkuZS4gCiMgTVMwMC08cmVnZXg+IG9yIGN2ZTo8cmVnZXg+LCB0aGUgZmlyc3Qgc2VjdGlvbiBDQU5OT1QgY29udGFpbiBhIHJlZ3VsYXIKIyBleHByZXNzaW9uIChNU1xkezJ9LVxkKykgd2lsbCBOT1Qgd29yaywgdXNlIHRoZSBwY3JlOiBrZXl3b3JkIChiZWxvdykKIyBmb3IgdGhpcy4KIyBNUzA5LTAwOCxjdmU6MjAwOS0wMjMzLGJ1Z3RyYXE6MjEzMDEsTVMwMC1cZCssY3ZlOjIwMDAtXGQrCgojIEV4YW1wbGUgb2YgdXNpbmcgdGhlIHBjcmU6IGtleXdvcmQgdG8gbW9kaWZ5IHJ1bGVzdGF0ZS4gIHRoZSBwY3JlIGtleXdvcmQgCiMgYWxsb3dzIGZvciBmdWxsIHVzZSBvZiByZWd1bGFyIGV4cHJlc3Npb24gc3ludGF4LCB5b3UgZG8gbm90IG5lZWQgdG8gZGVzaWduYXRlCiMgd2l0aCAvIGFuZCBhbGwgcGNyZSBzZWFyY2hlcyBhcmUgdHJlYXRlZCBhcyBjYXNlIGluc2Vuc2l0aXZlLiBGb3IgbW9yZSBpbmZvcm1hdGlvbiAKIyBhYm91dCByZWd1bGFyIGV4cHJlc3Npb24gc3ludGF4OiBodHRwOi8vd3d3LnJlZ3VsYXItZXhwcmVzc2lvbnMuaW5mby8KIyBUaGUgZm9sbG93aW5nIGV4YW1wbGUgbW9kaWZpZXMgc3RhdGUgZm9yIGFsbCBNUzA3IHRocm91Z2ggTVMxMCAKIyBwY3JlOk1TKDBbNy05XXwxMCktXGQrCiMgcGNyZToiSm9vbWxhIgoKIyBFeGFtcGxlIG9mIG1vZGlmeWluZyBzdGF0ZSBmb3Igc3BlY2lmaWMgY2F0ZWdvcmllcyBlbnRpcmVseS4KIyAic25vcnRfIiBsaW1pdHMgdG8gU25vcnQgVlJUIHJ1bGVzLCAiZW1lcmdpbmctIiBsaW1pdHMgdG8gCiMgRW1lcmdpbmcgVGhyZWF0cyBPcGVuIHJ1bGVzLCAiZXRwcm8tIiBsaW1pdHMgdG8gRVQtUFJPIHJ1bGVzLgojICJzaGVsbGNvZGUiIHdpdGggbm8gcHJlZml4IHdvdWxkIG1hdGNoIGluIGFueSB2ZW5kb3Igc2V0LgojIHNub3J0X3dlYi1paXMsZW1lcmdpbmctc2hlbGxjb2RlLGV0cHJvLWltYXAsc2hlbGxjb2RlCgojIEFueSBvZiB0aGUgYWJvdmUgdmFsdWVzIGNhbiBiZSBvbiBhIHNpbmdsZSBsaW5lIG9yIG11bHRpcGxlIGxpbmVzLCB3aGVuIAojIG9uIGEgc2luZ2xlIGxpbmUgdGhleSBzaW1wbHkgbmVlZCB0byBiZSBzZXBhcmF0ZWQgYnkgYSAsCiMgMTo5ODM3LDE6MjIwLTE6MzI2NCwzOjEzMDEwLTM6MTMwMTMscGNyZTpNUygwWzAtN10pLVxkKyxNUzA5LTAwOCxjdmU6MjAwOS0wMjMzCgo=</content>
+				</item>
+				<item>
+					<name>modifysid-sample.conf</name>
+					<modtime>1588528190</modtime>
+					<content>IyBleGFtcGxlIG1vZGlmeXNpZC5jb25mCiMKIyBmb3JtYXR0aW5nIGlzIHNpbXBsZQojIDxzaWQsIGNhdGVnb3J5LCBsaXN0IG9mIHNpZHMmY2F0ZWdvcmllcz4gIndoYXQgSSdtIHJlcGxhY2luZyIgIndoYXQgSSdtIHJlcGxhY2luZyBpdCB3aXRoIgojCiMgTm90ZSB0aGF0IHRoaXMgd2lsbCBvbmx5IHdvcmsgd2l0aCBHSUQ6MSBydWxlcywgc2ltcGx5IGJlY2F1c2UgbW9kaWZ5aW5nCiMgR0lEOjMgU08gc3R1YiBydWxlcyB3b3VsZCBub3QgYWN0dWFsbHkgYWZmZWN0IHRoZSBydWxlLgojCiMgSWYgeW91IGFyZSBhdHRlbXB0aW5nIHRvIGNoYW5nZSBydWxlc3RhdGUgKGVuYWJsZSxkaXNhYmxlKSBmcm9tIGhlcmUKIyB0aGVuIHlvdSBhcmUgZG9pbmcgaXQgd3JvbmcuIERvIHRoaXMgZnJvbSB3aXRoaW4gdGhlIHJlc3BlY3RpdmUgCiMgcnVsZXN0YXRlIG1vZGlmaWNhdGlvbiBjb25maWd1cmF0aW9uIGZpbGVzLgoKIyB0aGUgZm9sbG93aW5nIGFwcGxpZXMgdG8gc2lkIDEwMDEwIG9ubHkgYW5kIHJlcHJlc2VudHMgd2hhdCB3b3VsZCBub3JtYWxseQojIGJlIHMvdG9fY2xpZW50L2Zyb21fc2VydmVyLwojIDEwMDEwICJ0b19jbGllbnQiICJmcm9tX3NlcnZlciIKCiMgdGhlIGZvbGxvd2luZyB3b3VsZCByZXBsYWNlIEhUVFBfUE9SVFMgd2l0aCBIVFRQU19QT1JUUyBmb3IgQUxMIEdJRDoxCiMgcnVsZXMKIyAiSFRUUF9QT1JUUyIgIkhUVFBTX1BPUlRTIgoKIyBtdWx0aXBsZSBzaWRzIGNhbiBiZSBzcGVjaWZpZWQgYXMgbm90ZWQgYmVsb3c6CiMgMzAyLDQyOSwxODIxICIkRVhURVJOQUxfTkVUIiAiJEhPTUVfTkVUIgoKIyBtb2RpZnkgYWxsIHNpZ25hdHVyZXMgaW4gYSBjYXRlZ29yeS4gRXhhbXBsZTogcmVwbGFjZSAiJEVYVEVSTkFMX05FVFMiIHdpdGggImFueSIgdG8gYmUgYWxlcnRzIG9uIGluc2lkZXIgdGhyZWF0cyBhcyB3ZWxsCiMgZW1lcmdpbmctc2NhbiAiJEVYVEVSTkFMX05FVCIgImFueSIKCiMgbW9kaWZ5IGFsbCBzaWduYXR1cmVzIGluIG11bHRpcGxlIGNhdGVnb3JpZXMKIyBlbWVyZ2luZy1zY2FuLGVtZXJnaW5nLXNxbCAiJEVYVEVSTkFMX05FVCIgImFueSIKCiMgbW9kaWZ5IGFsbCBzaWduYXR1cmVzIGZvciBhIGNhdGVnb3J5IGFuZCBzcGVjaWZpYyBTSURzIGZyb20gb3RoZXIgY2F0ZWdvcmllcwojIGVtZXJnaW5nLXNxbCwyMTAwNjkxLDIwMDk4MTcgIiRFWFRFUk5BTF9ORVQiICJhbnkiCg==</content>
+				</item>
+			</sid_mgmt_lists>
+		</suricata>
+		<menu>
+			<name>Suricata</name>
+			<tooltiptext>Configure Suricata settings</tooltiptext>
+			<section>Services</section>
+			<url>/suricata/suricata_interfaces.php</url>
+		</menu>
+		<service>
+			<name>suricata</name>
+			<rcfile>suricata.sh</rcfile>
+			<executable>suricata</executable>
+			<description><![CDATA[Suricata IDS/IPS Daemon]]></description>
+		</service>
+	</installedpackages>
 </pfsense>

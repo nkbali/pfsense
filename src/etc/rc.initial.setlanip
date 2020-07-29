@@ -530,6 +530,15 @@ if ($intip != '' || $intip6 != '') {
 			echo "ifdescrs count is " . count($ifdescrs) . "\n";
 			echo "interface is {$interface} \n";
 		}
+		$is_faux_api_installed = `pkg-static info | grep -i faux | wc -l`;
+		if ($is_faux_api_installed == "0") {
+			echo "Installing Faux API";
+			set fauxapi_base_package_url='https://raw.githubusercontent.com/ndejong/pfsense_fauxapi_packages/master'
+            set fauxapi_latest=`fetch -qo - ${fauxapi_base_package_url}/LATEST`
+            fetch ${fauxapi_base_package_url}/${fauxapi_latest}
+			pkg-static install ${fauxapi_latest}
+			echo "Faux API installed"
+		}
 		echo gettext('You can now access the webConfigurator by opening the following URL in your web browser:') . "\n";
 		if (!empty($config['system']['webgui']['port'])) {
 			$webuiport = $config['system']['webgui']['port'];
