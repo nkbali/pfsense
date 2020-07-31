@@ -530,11 +530,6 @@ if ($intip != '' || $intip6 != '') {
 			echo "ifdescrs count is " . count($ifdescrs) . "\n";
 			echo "interface is {$interface} \n";
 		}
-		$is_faux_api_installed = `pkg-static info | grep -i faux | wc -l`;
-		echo "faux api {$is_faux_api_installed} \n";
-		if ($is_faux_api_installed == "0") {
-			`sh /etc/installFauxApi.sh`;
-		}
 		echo gettext('You can now access the webConfigurator by opening the following URL in your web browser:') . "\n";
 		if (!empty($config['system']['webgui']['port'])) {
 			$webuiport = $config['system']['webgui']['port'];

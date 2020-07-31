@@ -2,6 +2,7 @@
 benchmarks/%%PRODUCT_NAME%%-pkg-iperf
 benchmarks/iperf
 benchmarks/iperf3
+converters/base64
 databases/php73-mysqli
 databases/php73-pdo_mysql
 databases/php73-pgsql
