@@ -531,6 +531,7 @@ if ($intip != '' || $intip6 != '') {
 			echo "interface is {$interface} \n";
 		}
 		$is_faux_api_installed = `pkg-static info | grep -i faux | wc -l`;
+		echo "faux api {$is_faux_api_installed} \n";
 		if ($is_faux_api_installed == "0") {
 			`sh /etc/installFauxApi.sh`;
 		}
